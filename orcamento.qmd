@@ -1,0 +1,59 @@
+---
+title: "orcamento"
+author: "Guilherme Cavicchioli"
+format: html
+editor: visual
+---
+
+# Orçamento
+
+Este é um orçamento detalhado para os serviços solicitados.
+
+# Descrição
+
+Campanha de monitoramento de Fauna, incluindo os grupos de  
+
+# Tabela de Valores
+
+```{r}
+#| echo: False
+
+library(knitr)
+
+# Definindo a função para criar o orçamento
+criar_orcamento <- function(servicos, quantidades, valores) {
+  # Criando o data frame com os dados fornecidos
+  dados <- data.frame(
+    Serviço = servicos,
+    Quantidade = quantidades,
+    Valor = valores
+  )
+  
+  # Calculando o valor total para cada serviço
+  dados$`Valor_total` <- dados$Quantidade * dados$Valor
+  
+  # Adicionando a linha do total geral
+  total <- data.frame(
+    Serviço = "Total",
+    Quantidade = "-",
+    Valor = "-",
+    `Valor_total` = sum(dados$`Valor_total`)
+  )
+  
+  # Combinando os dados com o total
+  dados <- rbind(dados, total)
+  
+  # Exibindo a tabela
+  kable(dados, col.names = c("Serviço", "Quantidade", "Valor", "Total (R$)" ), align = 'c')
+}
+
+# Parâmetros de exemplo
+servicos <- c("Diárias de campo", "Relatório", "ART")
+quantidades <- c(2, 1, 1)
+valores <- c(300, 400, 150)
+
+# Chamando a função com os parâmetros de exemplo
+criar_orcamento(servicos, quantidades, valores)
+```
+
+
